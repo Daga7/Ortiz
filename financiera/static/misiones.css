@@ -1,0 +1,544 @@
+/* Incluye el CSS base */
+@import url('style.css');
+
+/* ===== MISIONES SPECIFIC STYLES ===== */
+.misiones-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    background: #f8f9fa;
+    min-height: 100vh;
+}
+
+/* Header de misiones */
+.misiones-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.misiones-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    transform: rotate(30deg);
+}
+
+.user-stats {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.stat-badge {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    min-width: 150px;
+}
+
+.stat-icon {
+    font-size: 2.5em;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 0.9em;
+    opacity: 0.9;
+}
+
+.header-content {
+    text-align: center;
+}
+
+.header-content h1 {
+    font-size: 2.8em;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.header-content p {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+/* Barra de progreso de nivel */
+.level-progress {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #333;
+}
+
+.progress-bar {
+    background: #e9ecef;
+    border-radius: 10px;
+    height: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #28a745, #20c997);
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Secciones */
+.misiones-section {
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-subtitle {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 1.1em;
+}
+
+/* Grid de Rachas */
+.rachas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.racha-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.racha-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.racha-card.racha-hot {
+    border-color: #ff6b6b;
+    background: linear-gradient(135deg, #fff, #fff5f5);
+}
+
+.racha-icon {
+    font-size: 3em;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 20px;
+    flex-shrink: 0;
+}
+
+.racha-hot .racha-icon {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.racha-content {
+    flex: 1;
+}
+
+.racha-content h3 {
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 1.3em;
+}
+
+.racha-content p {
+    color: #666;
+    margin-bottom: 15px;
+    font-size: 0.95em;
+}
+
+.racha-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.racha-current {
+    font-weight: bold;
+    color: #28a745;
+    font-size: 1.1em;
+}
+
+.racha-record {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.racha-reward {
+    text-align: right;
+}
+
+.reward-badge {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #856404;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+/* Grid de Logros */
+.logros-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.logro-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.logro-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.logro-card.logro-completado::before {
+    background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.logro-card.logro-bloqueado {
+    opacity: 0.7;
+}
+
+.logro-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.logro-icon {
+    font-size: 2.5em;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    border-radius: 15px;
+    flex-shrink: 0;
+}
+
+.logro-completado .logro-icon {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+}
+
+.logro-content {
+    flex: 1;
+}
+
+.logro-content h3 {
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 1.2em;
+}
+
+.logro-content p {
+    color: #666;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+}
+
+.logro-reward {
+    margin-top: 8px;
+}
+
+.reward-points {
+    background: #fff3cd;
+    color: #856404;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+.logro-status {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.status-completed {
+    color: #28a745;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+.status-pending {
+    color: #6c757d;
+    font-weight: 500;
+    font-size: 0.9em;
+}
+
+/* Misiones Diarias */
+.diarias-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mision-diaria {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.3s ease;
+}
+
+.mision-diaria:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.mision-checkbox {
+    flex-shrink: 0;
+}
+
+.mision-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.mision-checkbox label {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mision-checkbox input[type="checkbox"]:checked + label {
+    background: #28a745;
+    border-color: #28a745;
+    color: white;
+}
+
+.mision-checkbox input[type="checkbox"]:checked + label::after {
+    content: '✓';
+    font-weight: bold;
+}
+
+.mision-content {
+    flex: 1;
+}
+
+.mision-content h4 {
+    color: #333;
+    margin-bottom: 4px;
+    font-size: 1.1em;
+}
+
+.mision-content p {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.mision-reward {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+/* Tips Section */
+.tips-section {
+    margin-top: 40px;
+}
+
+.tip-card {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    padding: 25px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-left: 4px solid #ffc107;
+}
+
+.tip-icon {
+    font-size: 2.5em;
+    flex-shrink: 0;
+}
+
+.tip-content h4 {
+    color: #856404;
+    margin-bottom: 8px;
+    font-size: 1.2em;
+}
+
+.tip-content p {
+    color: #856404;
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .misiones-header {
+        padding: 30px 20px;
+    }
+    
+    .user-stats {
+        justify-content: center;
+    }
+    
+    .stat-badge {
+        min-width: 120px;
+        padding: 15px;
+    }
+    
+    .header-content h1 {
+        font-size: 2.2em;
+    }
+    
+    .rachas-grid,
+    .logros-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .racha-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .logro-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .logro-status {
+        text-align: center;
+        margin-top: 10px;
+    }
+    
+    .mision-diaria {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+    
+    .tip-card {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .misiones-main {
+        padding: 20px 15px;
+    }
+    
+    .stat-badge {
+        min-width: 100px;
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .section-title {
+        font-size: 1.6em;
+    }
+}

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💚 DineroSmart - Acciones</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="nav-icon">💚</span>
+                <span class="nav-title">DineroSmart</span>
+            </div>
+            
+           <div class="nav-links">
+               <a href="{{ url_for('inicio') }}" class="nav-link {% if request.endpoint == 'inicio' %}active{% endif %}">
+                   📊 Inicio
+               </a>
+               <a href="{{ url_for('acciones') }}" class="nav-link {% if request.endpoint == 'acciones' %}active{% endif %}">
+                   ⚡ Acciones
+               </a>
+               <a href="{{ url_for('misiones') }}" class="nav-link {% if request.endpoint == 'misiones' %}active{% endif %}">
+                   🎯 Misiones
+               </a>
+             </div> 
+           <div class="nav-user">
+                <span class="user-name">Hola, {{ nombre_usuario }}</span>
+                <a href="{{ url_for('logout') }}" class="logout-btn">🚪 Salir</a>
+            </div>
+        </div>
+    </nav>
+
+<!-- Contenido principal -->
+    <main class="actions-main">
+        <div class="actions-header">
+            <h1>⚡ Acciones Rápidas</h1>
+            <p>Gestiona tu dinero con estas acciones simples</p>
+        </div>
+
+        {% if mensaje %}
+            <div class="mensaje {{ 'mensaje-error' if '❌' in mensaje or '⚠️' in mensaje else 'mensaje-success' }}">
+                {{ mensaje }}
+            </div>
+        {% endif %}
+
+        <div class="actions-layout">
+            <!-- Grid de acciones -->
+            <div class="actions-section">
+                <div class="actions-grid">
+                    <!-- Ingresar dinero -->
+                    <div class="action-card">
+                        <div class="action-header">
+                            <span class="action-icon">💰</span>
+                            <h3>Recibir Dinero</h3>
+                        </div>
+                        <form method="post" class="action-form">
+                            <div class="form-group">
+                                <label for="cantidad">Cantidad a ingresar:</label>
+                                <input type="number" id="cantidad" name="cantidad" 
+                                       placeholder="0.00" step="0.01" min="0" required>
+                            </div>
+                            <button type="submit" name="accion" value="ingresar" class="btn btn-success btn-full">
+                                💰 Ingresar Dinero
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Registrar gasto -->
+                    <div class="action-card">
+                        <div class="action-header">
+                            <span class="action-icon">🛍️</span>
+                            <h3>Registrar Gasto</h3>
+                        </div>
+                        <form method="post" class="action-form">
+                            <div class="form-group">
+                                <label for="categoria">Categoría:</label>
+                                <select id="categoria" name="categoria" required>
+                                    <option value="">Selecciona una categoría</option>
+                                    <option value="comida">🍕 Comida</option>
+                                    <option value="transporte">🚗 Transporte</option>
+                                    <option value="entretenimiento">🎮 Entretenimiento</option>
+                                    <option value="educacion">📚 Educación</option>
+                                    <option value="salud">🏥 Salud</option>
+                                    <option value="ropa">👕 Ropa</option>
+                                    <option value="tecnologia">📱 Tecnología</option>
+                                    <option value="otros">📦 Otros</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="monto">Monto del gasto:</label>
+                                <input type="number" id="monto" name="monto" 
+                                       placeholder="0.00" step="0.01" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="descripcion">Descripción (opcional):</label>
+                                <input type="text" id="descripcion" name="descripcion" 
+                                       placeholder="¿En qué gastaste?">
+                            </div>
+                            <button type="submit" name="accion" value="gastar" class="btn btn-warning btn-full">
+                                🛍️ Registrar Gasto
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Ahorrar dinero -->
+                    <div class="action-card">
+                        <div class="action-header">
+                            <span class="action-icon">🏦</span>
+                            <h3>Ahorrar Dinero</h3>
+                        </div>
+                        <form method="post" class="action-form">
+                            <div class="form-group">
+                                <label for="monto_ahorro">Cantidad a ahorrar:</label>
+                                <input type="number" id="monto_ahorro" name="monto_ahorro" 
+                                       placeholder="0.00" step="0.01" min="0" required>
+                            </div>
+                            <div class="form-tip">
+                                💡 Tu saldo actual: ${{ "%.2f"|format(usuario.saldo) }}
+                            </div>
+                            <button type="submit" name="accion" value="ahorrar" class="btn btn-primary btn-full">
+                                🏦 Ahorrar Dinero
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Nueva meta -->
+                    <div class="action-card">
+                        <div class="action-header">
+                            <span class="action-icon">🎯</span>
+                            <h3>Nueva Meta</h3>
+                        </div>
+                        <form method="post" class="action-form">
+                            <div class="form-group">
+                                <label for="nombre_meta">Nombre de la meta:</label>
+                                <input type="text" id="nombre_meta" name="nombre_meta" 
+                                       placeholder="Ej: Viaje a la playa" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="monto_meta">Monto objetivo:</label>
+                                <input type="number" id="monto_meta" name="monto_meta" 
+                                       placeholder="0.00" step="0.01" min="0" required>
+                            </div>
+                            <button type="submit" name="accion" value="nueva_meta" class="btn btn-secondary btn-full">
+                                🎯 Crear Meta
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumen rápido -->
+            <div class="summary-section">
+                <div class="summary-card sticky-summary">
+                    <h3>📈 Resumen Rápido</h3>
+                    <div class="summary-items">
+                        <div class="summary-item">
+                            <div class="summary-label">
+                                <span class="summary-icon">💳</span>
+                                Saldo disponible
+                            </div>
+                            <span class="amount-positive">${{ "%.2f"|format(usuario.saldo) }}</span>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">
+                                <span class="summary-icon">🏦</span>
+                                Total ahorrado
+                            </div>
+                            <span class="amount-savings">${{ "%.2f"|format(usuario.ahorro) }}</span>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">
+                                <span class="summary-icon">📊</span>
+                                Gastos este mes
+                            </div>
+                            <span class="amount-negative">${{ "%.2f"|format(usuario.gastos|sum(attribute='monto')) }}</span>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">
+                                <span class="summary-icon">🎯</span>
+                                Metas activas
+                            </div>
+                            <span class="amount-neutral">{{ usuario.metas|length }}</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Mini estadísticas -->
+                    <div class="mini-stats">
+                        <div class="mini-stat">
+                            <span class="mini-stat-label">Promedio gasto:</span>
+                            <span class="mini-stat-value">
+                                ${{
+                                    "%.2f"|format(
+                                        (usuario.gastos|sum(attribute='monto') / usuario.gastos|length)
+                                        if usuario.gastos|length > 0 else 0
+                                    )
+                                }}
+                            </span>
+                        </div>
+                        <div class="mini-stat">
+                            <span class="mini-stat-label">Tasa de ahorro:</span>
+                            <span class="mini-stat-value">
+                                {{
+                                    "%.1f"|format(
+                                        (usuario.ahorro / (usuario.saldo + usuario.ahorro) * 100)
+                                        if (usuario.saldo + usuario.ahorro) > 0 else 0
+                                    )
+                                }}%
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-actions">
+                        <a href="{{ url_for('inicio') }}" class="btn btn-outline btn-full">
+                            📊 Ver Dashboard Completo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

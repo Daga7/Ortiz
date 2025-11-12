@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💚 DineroSmart - Misiones</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='misiones.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="nav-icon">💚</span>
+                <span class="nav-title">DineroSmart</span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="{{ url_for('inicio') }}" class="nav-link">
+                    📊 Inicio
+                </a>
+                <a href="{{ url_for('acciones') }}" class="nav-link">
+                    ⚡ Acciones
+                </a>
+                <a href="{{ url_for('misiones') }}" class="nav-link active">
+                    🎯 Misiones
+                </a>
+            </div>
+            
+            <div class="nav-user">
+                <span class="user-name">Hola, {{ nombre_usuario }}</span>
+                <a href="{{ url_for('logout') }}" class="logout-btn">🚪 Salir</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="misiones-main">
+        <!-- Header con stats del usuario -->
+        <div class="misiones-header">
+            <div class="user-stats">
+                <div class="stat-badge">
+                    <span class="stat-icon">⭐</span>
+                    <div class="stat-info">
+                        <span class="stat-value">Nivel {{ misiones.nivel }}</span>
+                        <span class="stat-label">Tu nivel</span>
+                    </div>
+                </div>
+                <div class="stat-badge">
+                    <span class="stat-icon">🏆</span>
+                    <div class="stat-info">
+                        <span class="stat-value">{{ misiones.puntos }}</span>
+                        <span class="stat-label">Puntos</span>
+                    </div>
+                </div>
+                <div class="stat-badge">
+                    <span class="stat-icon">📈</span>
+                    <div class="stat-info">
+                        <span class="stat-value">{{ misiones.experiencia }}/100</span>
+                        <span class="stat-label">EXP</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-content">
+                <h1>🎯 Misiones y Logros</h1>
+                <p>Completa misiones, mantén tus rachas y gana recompensas</p>
+            </div>
+        </div>
+
+        <!-- Barra de progreso de nivel -->
+        <div class="level-progress">
+            <div class="progress-header">
+                <span>Progreso al nivel {{ misiones.nivel + 1 }}</span>
+                <span>{{ misiones.experiencia }}/100 EXP</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ (misiones.experiencia / 100 * 100) | round }}%"></div>
+            </div>
+        </div>
+
+        <!-- Sección de Rachas -->
+        <section class="misiones-section">
+            <h2 class="section-title">🔥 Rachas Activas</h2>
+            <p class="section-subtitle">Mantén tus rachas para ganar más puntos</p>
+            
+            <div class="rachas-grid">
+                <div class="racha-card {% if misiones.rachas.ahorro.actual >= 5 %}racha-hot{% endif %}">
+                    <div class="racha-icon">🏦</div>
+                    <div class="racha-content">
+                        <h3>Racha de Ahorro</h3>
+                        <p>Ahorra dinero consecutivamente</p>
+                        <div class="racha-progress">
+                            <span class="racha-current">{{ misiones.rachas.ahorro.actual }} días</span>
+                            <span class="racha-record">Record: {{ misiones.rachas.ahorro.record }} días</span>
+                        </div>
+                        <div class="racha-reward">
+                            <span class="reward-badge">+5 EXP/día</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="racha-card {% if misiones.rachas.gasto_registrado.actual >= 3 %}racha-hot{% endif %}">
+                    <div class="racha-icon">📝</div>
+                    <div class="racha-content">
+                        <h3>Registro de Gastos</h3>
+                        <p>Registra tus gastos diariamente</p>
+                        <div class="racha-progress">
+                            <span class="racha-current">{{ misiones.rachas.gasto_registrado.actual }} días</span>
+                            <span class="racha-record">Record: {{ misiones.rachas.gasto_registrado.record }} días</span>
+                        </div>
+                        <div class="racha-reward">
+                            <span class="reward-badge">+2 EXP/día</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="racha-card {% if misiones.rachas.login.actual >= 7 %}racha-hot{% endif %}">
+                    <div class="racha-icon">🔓</div>
+                    <div class="racha-content">
+                        <h3>Racha de Login</h3>
+                        <p>Inicia sesión consecutivamente</p>
+                        <div class="racha-progress">
+                            <span class="racha-current">{{ misiones.rachas.login.actual }} días</span>
+                            <span class="racha-record">Record: {{ misiones.rachas.login.record }} días</span>
+                        </div>
+                        <div class="racha-reward">
+                            <span class="reward-badge">+1 EXP/día</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Logros -->
+        <section class="misiones-section">
+            <h2 class="section-title">🏆 Logros Desbloqueados</h2>
+            <p class="section-subtitle">Tus conquistas financieras</p>
+            
+            <div class="logros-grid">
+                <div class="logro-card {% if misiones.logros.primer_ahorro %}logro-completado{% else %}logro-bloqueado{% endif %}">
+                    <div class="logro-icon">
+                        {% if misiones.logros.primer_ahorro %}💰{% else %}🔒{% endif %}
+                    </div>
+                    <div class="logro-content">
+                        <h3>Primer Ahorro</h3>
+                        <p>Realiza tu primera operación de ahorro</p>
+                        <div class="logro-reward">
+                            <span class="reward-points">+10 puntos</span>
+                        </div>
+                    </div>
+                    <div class="logro-status">
+                        {% if misiones.logros.primer_ahorro %}
+                            <span class="status-completed">✅ Completado</span>
+                        {% else %}
+                            <span class="status-pending">⏳ Pendiente</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="logro-card {% if misiones.logros.primera_meta %}logro-completado{% else %}logro-bloqueado{% endif %}">
+                    <div class="logro-icon">
+                        {% if misiones.logros.primera_meta %}🎯{% else %}🔒{% endif %}
+                    </div>
+                    <div class="logro-content">
+                        <h3>Primera Meta</h3>
+                        <p>Crea tu primera meta de ahorro</p>
+                        <div class="logro-reward">
+                            <span class="reward-points">+15 puntos</span>
+                        </div>
+                    </div>
+                    <div class="logro-status">
+                        {% if misiones.logros.primera_meta %}
+                            <span class="status-completed">✅ Completado</span>
+                        {% else %}
+                            <span class="status-pending">⏳ Pendiente</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="logro-card {% if misiones.logros.ahorrador_novato %}logro-completado{% else %}logro-bloqueado{% endif %}">
+                    <div class="logro-icon">
+                        {% if misiones.logros.ahorrador_novato %}⭐{% else %}🔒{% endif %}
+                    </div>
+                    <div class="logro-content">
+                        <h3>Ahorrador Novato</h3>
+                        <p>Ahorra 5 días consecutivos</p>
+                        <div class="logro-reward">
+                            <span class="reward-points">+25 puntos</span>
+                        </div>
+                    </div>
+                    <div class="logro-status">
+                        {% if misiones.logros.ahorrador_novato %}
+                            <span class="status-completed">✅ Completado</span>
+                        {% else %}
+                            <span class="status-pending">{{ misiones.rachas.ahorro.record }}/5 días</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="logro-card {% if misiones.logros.ahorrador_experto %}logro-completado{% else %}logro-bloqueado{% endif %}">
+                    <div class="logro-icon">
+                        {% if misiones.logros.ahorrador_experto %}🏆{% else %}🔒{% endif %}
+                    </div>
+                    <div class="logro-content">
+                        <h3>Ahorrador Experto</h3>
+                        <p>Ahorra 20 días consecutivos</p>
+                        <div class="logro-reward">
+                            <span class="reward-points">+50 puntos</span>
+                        </div>
+                    </div>
+                    <div class="logro-status">
+                        {% if misiones.logros.ahorrador_experto %}
+                            <span class="status-completed">✅ Completado</span>
+                        {% else %}
+                            <span class="status-pending">{{ misiones.rachas.ahorro.record }}/20 días</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="logro-card {% if misiones.logros.control_gastos %}logro-completado{% else %}logro-bloqueado{% endif %}">
+                    <div class="logro-icon">
+                        {% if misiones.logros.control_gastos %}📊{% else %}🔒{% endif %}
+                    </div>
+                    <div class="logro-content">
+                        <h3>Control de Gastos</h3>
+                        <p>Registra 10 gastos diferentes</p>
+                        <div class="logro-reward">
+                            <span class="reward-points">+30 puntos</span>
+                        </div>
+                    </div>
+                    <div class="logro-status">
+                        {% if misiones.logros.control_gastos %}
+                            <span class="status-completed">✅ Completado</span>
+                        {% else %}
+                            <span class="status-pending">{{ usuario.gastos|length }}/10 gastos</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Misiones Diarias -->
+        <section class="misiones-section">
+            <h2 class="section-title">📅 Misiones del Día</h2>
+            <p class="section-subtitle">Completa estas acciones para ganar puntos extra</p>
+            
+            <div class="diarias-grid">
+                <div class="mision-diaria">
+                    <div class="mision-checkbox">
+                        <input type="checkbox" id="mision1" {% if misiones.rachas.ahorro.actual > 0 %}checked{% endif %}>
+                        <label for="mision1"></label>
+                    </div>
+                    <div class="mision-content">
+                        <h4>Ahorrar hoy</h4>
+                        <p>Realiza cualquier operación de ahorro</p>
+                    </div>
+                    <div class="mision-reward">+5 EXP</div>
+                </div>
+
+                <div class="mision-diaria">
+                    <div class="mision-checkbox">
+                        <input type="checkbox" id="mision2" {% if misiones.rachas.gasto_registrado.actual > 0 %}checked{% endif %}>
+                        <label for="mision2"></label>
+                    </div>
+                    <div class="mision-content">
+                        <h4>Registrar un gasto</h4>
+                        <p>Mantén tu registro financiero actualizado</p>
+                    </div>
+                    <div class="mision-reward">+2 EXP</div>
+                </div>
+
+                <div class="mision-diaria">
+                    <div class="mision-checkbox">
+                        <input type="checkbox" id="mision3" {% if misiones.rachas.login.actual > 0 %}checked{% endif %}>
+                        <label for="mision3"></label>
+                    </div>
+                    <div class="mision-content">
+                        <h4>Iniciar sesión</h4>
+                        <p>Visita la plataforma hoy</p>
+                    </div>
+                    <div class="mision-reward">+1 EXP</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tips y Consejos -->
+        <div class="tips-section">
+            <div class="tip-card">
+                <div class="tip-icon">💡</div>
+                <div class="tip-content">
+                    <h4>Consejo del día</h4>
+                    <p>Mantén tu racha de ahorro por 7 días seguidos para desbloquear bonificaciones especiales y desarrollar un hábito financiero sólido.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

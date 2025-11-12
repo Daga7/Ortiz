@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DineroSmart - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>💚 DineroSmart</h1>
+                <p>Tu aventura financiera comienza aquí</p>
+            </div>
+
+            {% if mensaje %}
+                <div class="mensaje {{ 'mensaje-error' if '❌' in mensaje or '⚠️' in mensaje else 'mensaje-success' }}">
+                    {{ mensaje }}
+                </div>
+            {% endif %}
+
+            <form method="post" class="auth-form">
+                <div class="form-group">
+                    <input type="text" name="usuario" placeholder="👤 Usuario" required 
+                           value="{{ request.form.usuario if request.form }}">
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" name="contrasena" placeholder="🔒 Contraseña" required>
+                </div>
+
+                <div class="botones-login">
+                    <button type="submit" name="accion" value="login" class="btn btn-primary btn-full">
+                        🚀 Iniciar sesión
+                    </button>
+                    <button type="submit" name="accion" value="register" class="btn btn-secondary btn-full">
+                        📝 Registrarse
+                    </button>
+                </div>
+            </form>
+
+            <div class="auth-footer">
+                <a href="{{ url_for('home') }}" class="back-link">← Volver al inicio</a>
+                <p class="auth-tip">
+                    💡 <strong>Tip:</strong> Usa tu nombre de usuario favorito. 
+                    Las contraseñas se guardan de forma segura.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

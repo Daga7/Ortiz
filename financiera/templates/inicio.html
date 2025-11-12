@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💚 DineroSmart - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="nav-icon">💚</span>
+                <span class="nav-title">DineroSmart</span>
+            </div>
+            
+           <div class="nav-links">
+               <a href="{{ url_for('inicio') }}" class="nav-link {% if request.endpoint == 'inicio' %}active{% endif %}">
+                   📊 Inicio
+               </a>
+               <a href="{{ url_for('acciones') }}" class="nav-link {% if request.endpoint == 'acciones' %}active{% endif %}">
+                   ⚡ Acciones
+               </a>
+               <a href="{{ url_for('misiones') }}" class="nav-link {% if request.endpoint == 'misiones' %}active{% endif %}">
+                   🎯 Misiones
+               </a>
+            </div> 
+            <div class="nav-user">
+                <span class="user-name">Hola, {{ nombre_usuario }}</span>
+                <a href="{{ url_for('logout') }}" class="logout-btn">🚪 Salir</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="dashboard-main">
+        <!-- Tarjetas de resumen -->
+        <div class="summary-cards">
+            <div class="card card-balance">
+                <div class="card-icon">💳</div>
+                <div class="card-content">
+                    <h3>Saldo disponible</h3>
+                    <p class="amount">${{ "%.2f"|format(usuario.saldo) }}</p>
+                    <p class="card-subtitle">Dinero listo para usar</p>
+                </div>
+            </div>
+
+            <div class="card card-savings">
+                <div class="card-icon">🏦</div>
+                <div class="card-content">
+                    <h3>Total ahorrado</h3>
+                    <p class="amount">${{ "%.2f"|format(usuario.ahorro) }}</p>
+                    <p class="card-subtitle">Tu futuro asegurado</p>
+                </div>
+            </div>
+
+            <div class="card card-expenses">
+                <div class="card-icon">📊</div>
+                <div class="card-content">
+                    <h3>Gastos registrados</h3>
+                    <p class="amount">{{ usuario.gastos|length }}</p>
+                    <p class="card-subtitle">Este mes</p>
+                </div>
+            </div>
+
+            <div class="card card-goals">
+                <div class="card-icon">🎯</div>
+                <div class="card-content">
+                    <h3>Metas activas</h3>
+                    <p class="amount">{{ usuario.metas|length }}</p>
+                    <p class="card-subtitle">Tus objetivos</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de gastos recientes -->
+        <div class="content-grid">
+            <div class="content-card">
+                <h2>📊 Gastos recientes</h2>
+                {% if usuario.gastos %}
+                    <div class="expenses-list">
+                        {% for gasto in usuario.gastos[-5:]|reverse %}
+                            <div class="expense-item">
+                                <div class="expense-info">
+                                    <span class="expense-category">{{ gasto.categoria }}</span>
+                                    {% if gasto.descripcion %}
+                                        <span class="expense-desc">- {{ gasto.descripcion }}</span>
+                                    {% endif %}
+                                    <span class="expense-date">{{ gasto.fecha if gasto.fecha else '' }}</span>
+                                </div>
+                                <span class="expense-amount">-${{ "%.2f"|format(gasto.monto) }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if usuario.gastos|length > 5 %}
+                        <div class="view-all">
+                            <a href="{{ url_for('acciones') }}" class="btn btn-outline">
+                                Ver todos los gastos
+                            </a>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="empty-state">
+                        <p>🎉 ¡No hay gastos registrados aún!</p>
+                        <p class="empty-subtitle">Ve a la sección de Acciones para registrar tu primer gasto.</p>
+                        <a href="{{ url_for('acciones') }}" class="btn btn-primary">
+                            ⚡ Ir a Acciones
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Sección de metas -->
+            <div class="content-card">
+                <h2>🎯 Metas de ahorro</h2>
+                {% if usuario.metas %}
+                    <div class="goals-list">
+                        {% for meta in usuario.metas %}
+                            <div class="goal-item {% if meta.completada %}goal-completed{% endif %}">
+                                <div class="goal-header">
+                                    <h4>{{ meta.nombre }}</h4>
+                                    <span class="goal-status">
+                                        {% if meta.completada %}
+                                            ✅ Completada
+                                        {% else %}
+                                            🎯 En progreso
+                                        {% endif %}
+                                    </span>
+                                </div>
+                                <div class="goal-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" 
+                                             style="width: {{ (meta.actual / meta.objetivo * 100) if meta.objetivo > 0 else 0 }}%">
+                                        </div>
+                                    </div>
+                                    <div class="goal-amounts">
+                                        <span>${{ "%.2f"|format(meta.actual) }}</span>
+                                        <span>${{ "%.2f"|format(meta.objetivo) }}</span>
+                                    </div>
+                                </div>
+                                <div class="goal-date">
+                                    Creada: {{ meta.fecha_creacion }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <p>🎯 ¡Crea tu primera meta de ahorro!</p>
+                        <p class="empty-subtitle">Establece objetivos y alcanza tus sueños.</p>
+                        <a href="{{ url_for('misiones') }}" class="btn btn-primary">
+                            🎯 Crear Meta
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>💸 Gasto total del mes</h3>
+                <p class="stat-amount">${{ "%.2f"|format(usuario.gastos|sum(attribute='monto')) }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>📈 Progreso de ahorro</h3>
+                <p class="stat-amount">{{ (usuario.ahorro / (usuario.saldo + usuario.ahorro) * 100) | round(1) if (usuario.saldo + usuario.ahorro) > 0 else 0 }}%</p>
+            </div>
+            <div class="stat-card">
+                <h3>⭐ Días consecutivos</h3>
+                <p class="stat-amount">{{ usuario.gastos|length * 2 }}</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

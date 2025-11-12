@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💚 DineroSmart - Inicio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="landing-container">
+        <header class="landing-header">
+            <h1>💚 DineroSmart</h1>
+            <p>Tu simulador educativo de ahorro y gasto juvenil</p>
+        </header>
+
+        <main class="landing-main">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="DineroSmart logo" class="landing-img">
+            
+            <h2>Aprende a manejar tu dinero de forma divertida</h2>
+            <p class="landing-text">
+                Gana experiencia financiera, completa misiones, y desarrolla buenos hábitos 
+                mientras aprendes a ahorrar y gastar inteligentemente.
+            </p>
+
+            <div class="landing-buttons">
+                <a href="{{ url_for('login') }}" class="btn btn-primary">🚀 Comenzar aventura</a>
+                {% if 'usuario' in session %}
+                    <a href="{{ url_for('inicio') }}" class="btn btn-secondary">📊 Mi dashboard</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-secondary">🔐 Ya tengo cuenta</a>
+                {% endif %}
+            </div>
+
+            <div class="landing-features">
+                <div class="feature">
+                    <span class="feature-icon">💰</span>
+                    <h3>Controla tus gastos</h3>
+                    <p>Registra y categoriza tus gastos fácilmente</p>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🏦</span>
+                    <h3>Ahorra con propósito</h3>
+                    <p>Establece metas y ve tu progreso</p>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">📊</span>
+                    <h3>Visualiza tu progreso</h3>
+                    <p>Reportes claros de tu situación financiera</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="landing-footer">
+            <h3>📘 Sobre el proyecto</h3>
+            <p>
+                DineroSmart es un simulador educativo diseñado para jóvenes que buscan aprender
+                sobre finanzas personales de forma práctica y divertida. Proyecto académico — 2025.
+            </p>
+            <small>© 2025 DineroSmart. Todos los derechos reservados.</small>
+        </footer>
+    </div>
+</body>
+</html>

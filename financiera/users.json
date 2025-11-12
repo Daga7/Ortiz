@@ -1,0 +1,41 @@
+{
+    "samu": {
+        "contrasena": "scrypt:32768:8:1$jF3a1VvM6mNfpb9X$8a89bb334f7403038a0cf705fafce3af0dd09acfeaeb3832bd1ad4e286bd141a4d87e2dab4cbd969e642cfb6ef2380991dd35a855220833d34073c0bf71cc915",
+        "datos": {
+            "nombre": "samu",
+            "saldo": 1500000.0,
+            "ahorro": 0.0,
+            "gastos": [],
+            "metas": [],
+            "misiones": {
+                "rachas": {
+                    "ahorro": {
+                        "actual": 0,
+                        "record": 0,
+                        "ultima_fecha": null
+                    },
+                    "gasto_registrado": {
+                        "actual": 0,
+                        "record": 0,
+                        "ultima_fecha": null
+                    },
+                    "login": {
+                        "actual": 1,
+                        "record": 1,
+                        "ultima_fecha": "2025-11-11"
+                    }
+                },
+                "logros": {
+                    "primer_ahorro": false,
+                    "primera_meta": false,
+                    "ahorrador_novato": false,
+                    "ahorrador_experto": false,
+                    "control_gastos": false
+                },
+                "puntos": 0,
+                "nivel": 1,
+                "experiencia": 2
+            }
+        }
+    }
+}
